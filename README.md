@@ -7,7 +7,7 @@ A machine learning pipeline that predicts e-commerce delivery times using AWS an
 
 ## 📸 App Preview
 
-![App](your_screenshot_url_here)
+![Image](https://github.com/user-attachments/assets/d8dd53cd-d0e9-4b81-a465-2b0c419c9f2f)
 
 ## 🏗️ Architecture
 ```
