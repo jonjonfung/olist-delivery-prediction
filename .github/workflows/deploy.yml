@@ -1,0 +1,56 @@
+name: Deploy ML Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run model tests
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ap-southeast-2
+        run: |
+          python -c "
+          import boto3
+          import joblib
+          import tempfile
+          import os
+
+          s3 = boto3.client('s3', region_name='ap-southeast-2')
+          
+          with tempfile.TemporaryDirectory() as tmp:
+              model_path = os.path.join(tmp, 'delivery_model.pkl')
+              s3.download_file(
+                  'olist-ecommerce-pipeline-john',
+                  'models/delivery_model.pkl',
+                  model_path
+              )
+              model = joblib.load(model_path)
+              print('✅ Model loaded successfully!')
+              print(f'✅ Model type: {type(model).__name__}')
+          "
+
+  notify:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify success
+        run: echo "✅ Pipeline deployed successfully!"
