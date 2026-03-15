@@ -3,7 +3,7 @@
 A machine learning pipeline that predicts e-commerce delivery times using AWS and Scikit-learn.
 
 ## 🌐 Live Demo
-👉 [Try the Live App](your_streamlit_url_here)
+👉 [Try the Live App]([your_streamlit_url_here](https://olist-delivery-prediction-bulkpjycmxq7mtulcq2dre.streamlit.app/))
 
 ## 📸 App Preview
 
