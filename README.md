@@ -1,7 +1,7 @@
 # 🚚 Olist Delivery Time Predictor
 
 A machine learning pipeline that predicts e-commerce delivery times for Brazilian orders. 
-Built using AWS Athena for data retrieval, Scikit-learn for model training, and Streamlit 
+Built using AWS Athena for data retrieval, Scikit-learn for model training, and Streamlit  
 for live predictions. This project is the second part of the 
 [Olist E-Commerce Pipeline](https://github.com/jonjonfung/olist-ecommerce-pipeline) project.
 
