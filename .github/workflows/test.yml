@@ -1,0 +1,65 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Test imports
+        run: |
+          python -c "
+          import sklearn
+          import joblib
+          import numpy
+          import pandas
+          import streamlit
+          import boto3
+          print('✅ All imports successful!')
+          print(f'✅ sklearn version: {sklearn.__version__}')
+          print(f'✅ numpy version: {numpy.__version__}')
+          print(f'✅ pandas version: {pandas.__version__}')
+          "
+
+      - name: Test model code
+        run: |
+          python -c "
+          from sklearn.ensemble import RandomForestRegressor
+          from sklearn.preprocessing import LabelEncoder
+          import numpy as np
+
+          # Test model can be created
+          model = RandomForestRegressor(n_estimators=10)
+          le = LabelEncoder()
+
+          # Test prediction works
+          X = np.array([[0, 1, 100.0, 20.0, 6, 1, 12]])
+          le.fit(['SP', 'RJ', 'MG'])
+          model.fit(X, [10])
+          pred = model.predict(X)
+          print(f'✅ Model prediction works: {pred[0]:.1f} days')
+          "
+
+      - name: Lint code
+        run: |
+          pip install flake8
+          flake8 dashboard/app.py --max-line-length=100 --ignore=E501,W503
+        continue-on-error: true
