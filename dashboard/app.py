@@ -95,4 +95,4 @@ if st.button("🔮 Predict Delivery Time", type="primary"):
         st.error(f"Error: {str(e)}")
 
 st.markdown("---")
-st.markdown("Built by John | AWS S3 + Scikit-learn + Streamlit")
+st.markdown("Built by Jonathan Fung | AWS S3 + Scikit-learn + Streamlit")
